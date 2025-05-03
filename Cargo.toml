@@ -1,0 +1,21 @@
+[package]
+name = "split-costs-rust-backend"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = { version = "0.8.3", features = ["default"] }
+axum-macros = "0.5.0"
+serde = { version = "1.0.219", features = ["derive"] }
+tokio = { version = "1.44.2", features = ["full"] }
+tower = "0.5.2"
+tracing = "0.1.41"
+tracing-subscriber = "0.3.19"
+diesel = { version = "2.2.0", features = ["postgres", "time"] }
+dotenvy = "0.15"
+time = "0.3.41"
+argon2 = "0.5.3"
+async-trait = "0.1.88"
+deadpool = "0.12.2"
+deadpool-diesel = { version = "0.6.1", features = ["postgres"] }
+serial_test = "3.2.0"

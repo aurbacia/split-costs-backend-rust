@@ -1,0 +1,8 @@
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR NOT NULL,
+  login VARCHAR NOT NULL,
+  display_name VARCHAR NOT NULL,
+  password VARCHAR NOT NULL,
+  created_at DATE NOT NULL DEFAULT CURRENT_DATE
+)

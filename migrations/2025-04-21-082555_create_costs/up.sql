@@ -1,0 +1,6 @@
+CREATE TABLE costs (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR NOT NULL,
+  description TEXT NOT NULL,
+  created_at DATE NOT NULL DEFAULT CURRENT_DATE
+)

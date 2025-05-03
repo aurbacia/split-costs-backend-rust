@@ -1,0 +1,5 @@
+CREATE TABLE groups (
+  id SERIAL PRIMARY KEY,
+  display_name VARCHAR NOT NULL,
+  created_at DATE NOT NULL DEFAULT CURRENT_DATE
+)
