@@ -16,7 +16,6 @@ pub struct Cost {
 pub struct User {
     pub id: i32,
     pub email: String,
-    pub login: String,
     pub display_name: String,
     pub password: String,
     pub created_at: time::Date,
