@@ -38,7 +38,7 @@ pub async fn register(
                 .then(|| {
                     insert_into(users)
                         .values(Payload {
-                            password: hash_password(payload.password.as_bytes()),
+                            password: hash_password(payload.password.as_ref()),
                             ..payload.clone()
                         })
                         .execute(conn)

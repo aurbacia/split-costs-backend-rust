@@ -1,6 +1,6 @@
-#[cfg(test)]
 #[macro_use]
-mod common;
+pub mod common;
+#[macro_use]
 mod tests {
     use argon2::{
         Argon2,
@@ -15,14 +15,10 @@ mod tests {
     use split_costs_rust_backend::schema::users::dsl::*;
     use split_costs_rust_backend::server::RoutesPathes;
 
-    use crate::common;
+    use crate::common::common::{self, random_payload_register};
 
-    fn random_payload() -> Payload {
-        Payload {
-            email: fakeit::contact::email(),
-            display_name: fakeit::name::full(),
-            password: fakeit::password::generate(true, true, true, 32),
-        }
+    pub fn random_payload() -> Payload {
+        random_payload_register()
     }
 
     #[tokio::test]
