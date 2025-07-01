@@ -1,4 +1,5 @@
 use diesel::prelude::*;
+use serde::{Deserialize, Serialize};
 
 #[derive(Queryable, Selectable, Identifiable, PartialEq, Debug)]
 #[diesel(table_name = crate::schema::costs)]
@@ -36,6 +37,7 @@ pub struct Session {
 #[derive(Queryable, Selectable, Identifiable, PartialEq, Debug)]
 #[diesel(table_name = crate::schema::groups)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
+#[derive(Serialize, Deserialize)]
 pub struct Group {
     pub id: i32,
     pub display_name: String,
