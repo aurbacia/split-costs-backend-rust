@@ -12,26 +12,9 @@ use validator::Validate;
 
 use axum_extra::extract::cookie::{Cookie, CookieJar};
 
-use crate::{jwt::encode_jwt, models::User, validate::ValidatedPayload};
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct UserSessionClaims {
-    pub exp: usize,
-    pub email: String,
-    pub display_name: String,
-}
-
-fn encode_jwt_user_session(email: String, display_name: String) -> String {
-    encode_jwt(&UserSessionClaims {
-        exp: usize::try_from(
-            time::UtcDateTime::now().unix_timestamp()
-                + i64::try_from(time::Duration::days(30).whole_milliseconds()).unwrap(),
-        )
-        .unwrap(),
-        email: email,
-        display_name: display_name,
-    })
-}
+use crate::{
+    extractors::session::encode_jwt_user_session, models::User, validate::ValidatedPayload,
+};
 
 pub async fn login(
     jar: CookieJar,
@@ -62,7 +45,11 @@ pub async fn login(
             ) {
                 Err(_) => (StatusCode::UNAUTHORIZED).into_response(),
                 Ok(_) => {
-                    let token = encode_jwt_user_session(user_info.email, user_info.display_name);
+                    let token = encode_jwt_user_session(
+                        user_info.email,
+                        user_info.display_name,
+                        user_info.id,
+                    );
 
                     jar.add(Cookie::new("session_token", token.clone()))
                         .into_response()

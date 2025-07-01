@@ -4,9 +4,9 @@ pub mod common;
 mod tests {
     use axum::http::header::SET_COOKIE;
     use paste::paste;
+    use split_costs_rust_backend::extractors::session::decode_jwt_user_session;
     use split_costs_rust_backend::routes::login::Payload;
     use split_costs_rust_backend::server::RoutesPathes;
-    use split_costs_rust_backend::{jwt::decode_jwt, routes::login::UserSessionClaims};
 
     use crate::common::common;
     fn random_payload() -> Payload {
@@ -42,7 +42,7 @@ mod tests {
             .unwrap()
             .replace("session_token=", "");
 
-        let claims = decode_jwt::<UserSessionClaims>(&session_token);
+        let claims = decode_jwt_user_session(&session_token);
         assert_eq!(claims.claims.display_name, payload_register.display_name);
         assert_eq!(claims.claims.email, payload_register.email);
     }

@@ -1,4 +1,5 @@
 pub mod database;
+pub mod extractors;
 pub mod jwt;
 pub mod models;
 pub mod routes;
