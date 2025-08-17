@@ -6,6 +6,9 @@ diesel::table! {
         title -> Varchar,
         description -> Text,
         created_at -> Date,
+        group_id -> Int4,
+        user_id -> Int4,
+        amount -> Float8,
     }
 }
 
@@ -14,6 +17,31 @@ diesel::table! {
         id -> Int4,
         display_name -> Varchar,
         created_at -> Date,
+    }
+}
+
+diesel::table! {
+    payments (id) {
+        id -> Int4,
+        user_id -> Int4,
+        amount -> Float8,
+        created_at -> Date,
+    }
+}
+
+diesel::table! {
+    payments_quotas (payment_id, quota_id) {
+        payment_id -> Int4,
+        quota_id -> Int4,
+    }
+}
+
+diesel::table! {
+    quotas (id) {
+        id -> Int4,
+        user_id -> Int4,
+        cost_id -> Int4,
+        percentage_quota -> Float8,
     }
 }
 
@@ -45,8 +73,24 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(costs -> groups (group_id));
+diesel::joinable!(costs -> users (user_id));
+diesel::joinable!(payments -> users (user_id));
+diesel::joinable!(payments_quotas -> payments (payment_id));
+diesel::joinable!(payments_quotas -> quotas (quota_id));
+diesel::joinable!(quotas -> costs (cost_id));
+diesel::joinable!(quotas -> users (user_id));
 diesel::joinable!(sessions -> users (user_id));
 diesel::joinable!(users_groups -> groups (group_id));
 diesel::joinable!(users_groups -> users (user_id));
 
-diesel::allow_tables_to_appear_in_same_query!(costs, groups, sessions, users, users_groups,);
+diesel::allow_tables_to_appear_in_same_query!(
+    costs,
+    groups,
+    payments,
+    payments_quotas,
+    quotas,
+    sessions,
+    users,
+    users_groups,
+);
